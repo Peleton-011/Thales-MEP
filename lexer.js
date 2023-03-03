@@ -1,4 +1,4 @@
-export const TokenTypes = {
+const TokenTypes = {
     PLUS: "PLUS",
     MINUS: "MINUS",
     MULTIPLY: "MULTIPLY",
@@ -7,7 +7,7 @@ export const TokenTypes = {
     EOF: "EOF"
 }
 
-export default class Lexer {
+class Lexer {
 
     #stream = "";
     #cursor = 0;
@@ -80,4 +80,8 @@ export default class Lexer {
 function isNumeric(char) {
     //We use an ASCII range of 48-57 (0-9)
     return char.charCodeAt(0) >= 48 && char.charCodeAt(0) <= 57;
+}
+
+module.exports = {
+    Lexer, TokenTypes
 }
