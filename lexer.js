@@ -17,7 +17,10 @@ class Lexer {
     }
 
     #createToken (type, value) {
-
+        return {
+            type: type,
+            value: value,
+        }
     }
 
 
@@ -32,26 +35,31 @@ class Lexer {
             switch (this.#at()) {
 
                 case " ":
-                case "\t":
-                case "\n":
-                case "\r":
+
                     break;
 
                 case "+":
                     tokens.push(this.#createToken(TokenTypes.PLUS));
+                    break;
+
                 case "-":
                     tokens.push(this.#createToken(TokenTypes.MINUS));
+                    break;
+
                 case "*":
                     tokens.push(this.#createToken(TokenTypes.MULTIPLY));
+                    break;
+
                 case "/":
                     tokens.push(this.#createToken(TokenTypes.DIVIDE));
+                    break;
 
                 default:
 
                     if(isNumeric(this.#at())) {
                         let strNumber = "";
 
-                        while (this.#cursor > this.#stream.length && isNumeric(this.#at())) {
+                        while (this.#cursor < this.#stream.length && isNumeric(this.#at())) {
                             strNumber += this.#at();
                             this.#cursor++;
                         }
