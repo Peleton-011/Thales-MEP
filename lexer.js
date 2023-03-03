@@ -57,6 +57,8 @@ export default class Lexer {
                         }
 
                         tokens.push(this.#createToken(TokenTypes.INTEGER, parseInt(strNumber)));
+
+                        this.#cursor--;
                         
                     }
                     else {
