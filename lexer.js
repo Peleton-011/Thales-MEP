@@ -39,8 +39,21 @@ export default class Lexer {
 
                 case "+":
                     tokens.push(this.#createToken(TokenTypes.PLUS));
+                case "-":
+                    tokens.push(this.#createToken(TokenTypes.MINUS));
+                case "*":
+                    tokens.push(this.#createToken(TokenTypes.MULTIPLY));
+                case "/":
+                    tokens.push(this.#createToken(TokenTypes.DIVIDE));
 
                 default:
+
+                    if(isNumeric(this.#at())) {
+
+                    }
+                    else {
+                        throw new Error(`Unexpected character: ${this.#at()} \n At position: ${this.#cursor}`);
+                    }
                     break;
             }
 
@@ -49,4 +62,9 @@ export default class Lexer {
         }
     }
     
+}
+
+function isNumeric(char) {
+    //We use an ASCII range of 48-57 (0-9)
+    return char.charCodeAt(0) >= 48 && char.charCodeAt(0) <= 57;
 }
