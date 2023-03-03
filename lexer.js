@@ -1,3 +1,12 @@
+const TokenTypes = {
+    PLUS: "PLUS",
+    MINUS: "MINUS",
+    MULTIPLY: "MULTIPLY",
+    DIVIDE: "DIVIDE",
+    INTEGER: "INTEGER",
+    EOF: "EOF"
+}
+
 export default class Lexer {
 
     #stream = "";
@@ -7,10 +16,16 @@ export default class Lexer {
         return this.#stream[this.#cursor];
     }
 
+    #createToken (type, value) {
+
+    }
+
 
     tokenize (input = "") {
         this.#stream = input;
         this.#cursor = 0;
+
+        const tokens = [];
 
         //continue through the stream
         while (this.#cursor < this.#stream.length) {
@@ -22,6 +37,8 @@ export default class Lexer {
                 case "\r":
                     break;
 
+                case "+":
+                    tokens.push(this.#createToken(TokenTypes.PLUS));
 
                 default:
                     break;
