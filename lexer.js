@@ -17,13 +17,17 @@ export default class Lexer {
             switch (this.#at()) {
 
                 case " ":
-                case "/t":
-                    return;
+                case "\t":
+                case "\n":
+                case "\r":
+                    break;
 
 
                 default:
                     break;
             }
+
+            this.#cursor++;
 
         }
     }
