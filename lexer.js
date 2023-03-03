@@ -49,7 +49,15 @@ export default class Lexer {
                 default:
 
                     if(isNumeric(this.#at())) {
+                        let strNumber = "";
 
+                        while (this.#cursor > this.#stream.length && isNumeric(this.#at())) {
+                            strNumber += this.#at();
+                            this.#cursor++;
+                        }
+
+                        tokens.push(this.#createToken(TokenTypes.INTEGER, parseInt(strNumber)));
+                        
                     }
                     else {
                         throw new Error(`Unexpected character: ${this.#at()} \n At position: ${this.#cursor}`);
