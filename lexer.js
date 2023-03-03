@@ -1,4 +1,4 @@
-const TokenTypes = {
+export const TokenTypes = {
     PLUS: "PLUS",
     MINUS: "MINUS",
     MULTIPLY: "MULTIPLY",
@@ -70,6 +70,9 @@ export default class Lexer {
             this.#cursor++;
 
         }
+
+        tokens.push(this.#createToken(TokenTypes.EOF));
+        return tokens;
     }
     
 }
