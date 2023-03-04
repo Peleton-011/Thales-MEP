@@ -12,5 +12,5 @@ const parser = new Parser(tokens);
 
 const ast = parser.parse();
 
-console.log(util.inspect(ast, {showHidden: false, depth: null}));
+console.log(util.inspect(ast, {showHidden: false, depth: null, colors: true}));
 
