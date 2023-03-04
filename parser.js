@@ -61,7 +61,7 @@ class Parser {
 
             this.#consume(operation);
             
-            let rightFactor = this.#parseTerm();
+            let rightFactor = this.#parseFactor();
 
             leftFactor = {type: operation/*TokenTypes.OPERATOR*/, value: operation, left: leftFactor, right: rightFactor};
 
