@@ -191,18 +191,25 @@ function newToken(type = "") {
         case "Int":
             return new Int(...args);
         case "Add":
+        case "+":
             return new Add(...args);
         case "Sub":
+        case "-":
             return new Sub(...args);
         case "Mult":
+        case "*":
             return new Mult(...args);
         case "Div":
+        case "/":
             return new Div(...args);
         case "Mod":
+        case "%":
             return new Mod(...args);
         case "Negate":
+        case "Neg":
             return new Negate(...args);
         case "Inverse":
+        case "Inv":
             return new Inverse(...args);
 
         default:
