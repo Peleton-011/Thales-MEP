@@ -78,19 +78,18 @@ class Parser {
             this.#consume(TokenTypes.INTEGER);
             return literal;
         }
+
         
         //Parenthesized expression
-        this.#consume(TokenTypes.LPAREN);
-        
-        let expression
 
-        while (this.#at().type !== TokenTypes.RPAREN) {
-            expression = this.#parseExpression();
+        if (this.#at().type === TokenTypes.LPAREN) {
+            this.#consume(TokenTypes.LPAREN);
+            let expression = this.#parseExpression();
+            this.#consume(TokenTypes.RPAREN);
+            return expression;
         }
 
-        this.#consume(TokenTypes.RPAREN);
-
-        return expression;
+        throw new Error(`Expected a token of type ${TokenTypes.LPAREN} or type ${TokenTypes.INTEGER} but found ${this.#at().type}`);
     }
 }
 
