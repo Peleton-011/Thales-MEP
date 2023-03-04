@@ -181,7 +181,43 @@ class Int extends TreeNode {
 
 }
 
+function newToken(type = "") {
+
+    const args = Array.prototype.slice.call(arguments, 1);
+
+    switch (type) {
+        case "ID":
+            return new ID(...args);
+        case "Int":
+            return new Int(...args);
+        case "Add":
+            return new Add(...args);
+        case "Sub":
+            return new Sub(...args);
+        case "Mult":
+            return new Mult(...args);
+        case "Div":
+            return new Div(...args);
+        case "Mod":
+            return new Mod(...args);
+        case "Negate":
+            return new Negate(...args);
+        case "Inverse":
+            return new Inverse(...args);
+
+        default:
+
+            break;
+    }
+    
+
+}
+
 //const a = new Sub(new Int(2), new Int(3));
 
 //console.log(a.eval());
 //console.log(a.print());
+
+module.exports = {
+    newToken
+}
