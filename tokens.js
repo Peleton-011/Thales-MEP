@@ -92,24 +92,73 @@ class Div extends BinaryTreeNode {
     }
 }
 
-//To-Do: Actual implementation of the modulo operator
-
 class Mod extends BinaryTreeNode {
+    constructor (left, right) {
+        super(left, right);
+    }
 
+    operator = "%";
+
+    eval() {
+        return this.left.eval() % this.right.eval();
+    }
 }
 
 class Negate extends TreeNode {
 
-}
+    node;
 
-//To-Do: Actual implementation of the inverse operator
+    constructor (node) {
+        super();
+        this.node = node;
+    }
+
+    eval() {
+        return -this.node.eval();
+    }
+
+    print() {
+        return `-(${this.node.print()})`;
+    }
+}
 
 class Inverse extends TreeNode {
+    
+    node;
 
+    constructor (node) {
+        super();
+        this.node = node;
+    }
+
+    eval() {
+        return 1/(this.node.eval());
+    }
+
+    print() {
+        return `1/(${this.node.print()})`;
+    }
 }
+
+// To-Do: Improve ID implementation
+// To-Do: Implement Power(a,b) and Root(a,b) etc...
 
 class ID extends TreeNode {
 
+    id;
+
+    constructor (id) {
+       super();
+       this.id = id; 
+    }
+
+    eval() {
+        return this.id;
+    }
+
+    print() {
+        return this.id;
+    }
 }
 
 class Int extends TreeNode {
