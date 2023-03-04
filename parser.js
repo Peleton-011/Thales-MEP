@@ -42,7 +42,7 @@ class Parser {
 
             this.#consume(operation);
 
-            let rightTerm = this.#parseExpression();
+            let rightTerm = this.#parseTerm();
 
             //Might want to include that the operator is a binary operator vv
             leftTerm = {type: operation/*TokenTypes.OPERATOR*/, value: operation, left: leftTerm, right: rightTerm}
