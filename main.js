@@ -1,8 +1,14 @@
 const {Lexer} = require("./lexer.js");
+const {Parser} = require("./parser.js");
 
 const lexer = new Lexer();
 
 const expression = "10 - 2";
+const tokens = lexer.tokenize(expression);
+ 
+const parser = new Parser(tokens);
 
-console.log(lexer.tokenize(expression));
+const ast = parser.parse();
+
+console.log(ast);
 
