@@ -70,7 +70,8 @@ class Lexer {
                         
                     }
                     else {
-                        throw new Error(`Unexpected character: ${this.#at()} \n At position: ${this.#cursor}`);
+                        throw new Error(`Unexpected character: ${this.#at()}  at position: ${this.#cursor}`);
+
                     }
                     break;
             }
