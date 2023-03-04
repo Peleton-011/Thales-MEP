@@ -1,3 +1,5 @@
+const util = require('util');
+
 const {Lexer} = require("./lexer.js");
 const {Parser} = require("./parser.js");
 
@@ -10,5 +12,5 @@ const parser = new Parser(tokens);
 
 const ast = parser.parse();
 
-console.log(ast);
+console.log(util.inspect(ast, {showHidden: false, depth: null}));
 
