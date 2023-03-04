@@ -4,6 +4,8 @@ const TokenTypes = {
     MULTIPLY: "MULTIPLY",
     DIVIDE: "DIVIDE",
     INTEGER: "INTEGER",
+    LPAREN: "LPAREN",
+    RPAREN: "RPAREN",
     EOF: "EOF"
 }
 
@@ -52,6 +54,13 @@ class Lexer {
 
                 case "/":
                     tokens.push(this.#createToken(TokenTypes.DIVIDE));
+                    break;
+
+                case "(":
+                    tokens.push(this.#createToken(TokenTypes.LPAREN));
+                    break;
+                case ")":
+                    tokens.push(this.#createToken(TokenTypes.RPAREN));
                     break;
 
                 default:

@@ -63,6 +63,8 @@ class Parser {
             
             let rightFactor = this.#parseFactor();
 
+            leftFactor = {type: operation/*TokenTypes.OPERATOR*/, value: operation, left: leftFactor, right: rightFactor};
+
         }
         
         return leftFactor;
@@ -70,9 +72,25 @@ class Parser {
 
     //Highest precedence
     #parseFactor () {
-        let literal = {type: "NumericLiteral", value: this.#at().value};
-        this.#consume(TokenTypes.INTEGER);
-        return literal;
+
+        if (this.#at().type === TokenTypes.INTEGER) {
+            let literal = {type: "NumericLiteral", value: this.#at().value};
+            this.#consume(TokenTypes.INTEGER);
+            return literal;
+        }
+        
+        //Parenthesized expression
+        this.#consume(TokenTypes.LPAREN);
+        
+        let expression
+
+        while (this.#at().type !== TokenTypes.RPAREN) {
+            expression = this.#parseExpression();
+        }
+
+        this.#consume(TokenTypes.RPAREN);
+
+        return expression;
     }
 }
 
