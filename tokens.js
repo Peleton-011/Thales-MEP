@@ -181,6 +181,13 @@ class Int extends TreeNode {
 
 }
 
+class EOF extends TreeNode {
+    constructor() {
+        super();
+    }
+}
+
+
 function newToken(type = "") {
 
     const args = Array.prototype.slice.call(arguments, 1);
@@ -211,6 +218,9 @@ function newToken(type = "") {
         case "Inverse":
         case "Inv":
             return new Inverse(...args);
+        case "EOF":
+        case "eof":
+            return new EOF();
 
         default:
 
