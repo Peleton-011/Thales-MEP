@@ -40,11 +40,23 @@ class Parser {
     #parseFactor () {
         switch (this.#currentToken().type) {
             case "id":
-                case "int":
+            case "int":
                 return this.#currentToken;
-            case "(":
+            case "lparen":
                 this.#consume();
-                
+                const innerExpr = this.#parseExpr();
+                //if innerExpr == null -> Error
+                if (this.#currentToken().type!== "rparen") {
+                    return new Error("Expected ')'");
+                } else {
+                    this.#consume();
+                    return innerExpr;
+                }
+            case "negate":
+                this.#consume();
+                return new Negate(this.#parseFactor());
+            default:
+                return new Error(`Expected token type: id, int, lparen, rparen, negate`);
 
         }
     }
