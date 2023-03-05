@@ -3,6 +3,8 @@
 
 class TreeNode {
 
+    type = "node";
+
     eval() {
         return 0;
     }
@@ -37,6 +39,8 @@ class BinaryTreeNode extends TreeNode {
 
 class Add extends BinaryTreeNode {
 
+    type = "add";
+
     constructor (left, right) {
         super(left, right);
     }
@@ -53,6 +57,8 @@ class Add extends BinaryTreeNode {
 
 class Sub extends BinaryTreeNode {
 
+    type = "sub";
+
     constructor (left, right) {
         super(left, right);
     }
@@ -65,6 +71,8 @@ class Sub extends BinaryTreeNode {
 }
 
 class Mult extends BinaryTreeNode {
+
+    type = "mult";
 
     constructor (left, right) {
         super(left, right);
@@ -81,6 +89,8 @@ class Mult extends BinaryTreeNode {
 
 class Div extends BinaryTreeNode {
 
+    type = "div";
+    
     constructor (left, right) {
         super(left, right);
     }
@@ -93,6 +103,9 @@ class Div extends BinaryTreeNode {
 }
 
 class Mod extends BinaryTreeNode {
+
+    type = "mod";
+    
     constructor (left, right) {
         super(left, right);
     }
@@ -105,6 +118,8 @@ class Mod extends BinaryTreeNode {
 }
 
 class Negate extends TreeNode {
+
+    type = "negate";
 
     node;
 
@@ -123,6 +138,8 @@ class Negate extends TreeNode {
 }
 
 class Inverse extends TreeNode {
+
+    type = "inverse";
     
     node;
 
@@ -145,6 +162,8 @@ class Inverse extends TreeNode {
 
 class ID extends TreeNode {
 
+    type = "id";
+
     id;
 
     constructor (id) {
@@ -162,6 +181,8 @@ class ID extends TreeNode {
 }
 
 class Int extends TreeNode {
+
+    type = "int";
 
     value;
 
@@ -182,6 +203,9 @@ class Int extends TreeNode {
 }
 
 class EOF extends TreeNode {
+
+    type = "eof";
+    
     constructor() {
         super();
     }
