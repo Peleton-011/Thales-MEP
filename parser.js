@@ -32,20 +32,20 @@ class Parser {
 
     #depth = this.#operations.length - 1;
 
-    parse (depth = 0, carry = this.#parse(1)) {
+    parse (currDepth = 0, carry = this.#parse(1)) {
 
-        if (depth === this.#depth) {
+        if (currDepth === this.#depth) {
             return this.#parseFactor();
         }
 
-        const tokenType = this.#currentToken().type;
+        const operation = this.#currentToken().type;
         
-        if (!(tokenType in this.#operations[depth])) {
+        if (!(operation in this.#operations[currDepth])) {
             return carry;
         }
-        this.#consume(tokenType);
-        const right = this.#parse(depth + 1, carry);
-        carry = newToken(tokenType, carry, right);
+        this.#consume(operation);
+        const newTerm = this.#parse(currDepth + 1, carry);
+        carry = newToken(operation, carry, newTerm);
         this.#parse(carry);
     }
 
