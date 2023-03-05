@@ -14,10 +14,14 @@ class Parser {
     }
 
     #consume (type) {
-        if (this.#currentToken().type === type) {
-            this.#cursor += 1;
-        } else {
+        const reachedEnd = this.#cursor >= this.#tokenStream.length;
+        const correctType = type === this.#currentToken().type;
+    
+        if (!correctType) {
             throw new Error(`Expected token type: ${type} but found ${this.#currentToken().type}`);
+        }
+        if (!reachedEnd) {
+            this.#cursor += 1;
         }
     }
 
@@ -41,13 +45,13 @@ class Parser {
 
         carry = carry || this.parse(currDepth + 1);
 
-        console.log("carry", currDepth, JSON.stringify(carry, null, 4));
         const operation = this.#currentToken().type;
         const opInCurrDepth = this.#operations[currDepth].includes(operation) || false;
-
-        console.log(operation, this.#operations[currDepth], opInCurrDepth);
         
-        if (!opInCurrDepth) {
+        console.log(operation, this.#operations[currDepth], opInCurrDepth);
+        console.log("carry", currDepth, JSON.stringify(carry, null, 4));
+        
+        if (!opInCurrDepth || operation === "eof") {
             return carry;
         }
 
