@@ -1,4 +1,4 @@
-
+const { newToken } = require('./tokens');
 
 class Parser {
     
@@ -30,6 +30,26 @@ class Parser {
     }
 
     #parseExpr () {
+        const left = this.#parseTerm();
+        //To-Do: check if the while loop does anything
+        while (true) {
+            //To-Do: compress to 
+            //if tokenType = + || tokenType = -
+            //this.#consume(tokenType);
+            //...
+            if (this.#currentToken().type === "add") {
+                this.#consume("add");
+                const right = this.#parseTerm();
+                left = newToken("add", left, right);
+            } else if (this.#currentToken().type === "sub") {
+                this.#consume("sub");
+                const right = this.#parseTerm();
+                left = newToken("sub", left, right);
+            } else {
+                return left;
+            }
+
+        }
 
     }
 
