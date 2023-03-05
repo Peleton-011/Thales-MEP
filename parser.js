@@ -45,30 +45,36 @@ class Parser {
 
         carry = carry || this.parse(currDepth + 1);
 
-        const operation = this.#currentToken().type;
-        const opInCurrDepth = this.#operations[currDepth].includes(operation) || false;
+        const operation = () => this.#currentToken().type;
+        const opInCurrDepth = () => this.#operations[currDepth].includes(operation()) || false;
         
-        console.log(operation, this.#operations[currDepth], opInCurrDepth);
+        console.log(operation(), this.#operations[currDepth], opInCurrDepth());
         console.log("carry", currDepth, JSON.stringify(carry, null, 4));
         
-        if (!opInCurrDepth || operation === "eof") {
-            return carry;
-        }
+        //if (!opInCurrDepth || operation === "eof") {
+        //    return carry;
+        //}
 
-        this.#consume(operation);
-        const newTerm = this.parse(currDepth + 1);
-        console.log("nTerm", currDepth, JSON.stringify(newTerm, null, 4));
-        console.log("carry", currDepth, JSON.stringify(carry, null, 4));
-        console.log(operation)
-        carry = newToken(operation, carry, newTerm);
-        console.log("nCarry", currDepth, JSON.stringify(carry, null, 4));
+        while (opInCurrDepth()) {
+            const currOp = operation();
+            this.#consume(currOp);
+            const newTerm = this.parse(currDepth + 1);
+            console.log("nTerm", currDepth, JSON.stringify(newTerm, null, 4));
+            console.log("carry", currDepth, JSON.stringify(carry, null, 4));
+            console.log(currOp)
+            carry = newToken(currOp, carry, newTerm);
+            console.log("nCarry", currDepth, JSON.stringify(carry, null, 4));
+        }
+        
+        return carry;
+
         this.parse(currDepth, carry);
     }
 
     #parseFactor () {
         const currType = this.#currentToken().type;
         const currToken = this.#currentToken();
-        console.log(currToken, currType);
+        console.log("parsing", currToken, "for", currType);
         switch (currType) {
             case "id":
             case "int":
@@ -90,10 +96,8 @@ class Parser {
             case "negate":
                 this.#consume("negate");
                 return new Negate(this.#parseFactor());
-            case "eof":
-                return currToken;
             default:
-                return new Error(`Expected token type: id, int, lparen, rparen, negate`);
+                throw new Error(`Expected token type: id, int, lparen, rparen, negate`);
 
         }
     }

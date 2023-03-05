@@ -1,6 +1,6 @@
 const util = require('util');
 
-const {Lexer} = require("./lexer.js");
+const {Lexer} = require("./OLD_lexer.js");
 const {Parser} = require("./OLD_parser.js");
 
 const lexer = new Lexer();

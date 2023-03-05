@@ -70,9 +70,9 @@ class Sub extends BinaryTreeNode {
     }
 }
 
-class Mult extends BinaryTreeNode {
+class Mul extends BinaryTreeNode {
 
-    type = "mult";
+    type = "mul";
 
     constructor (left, right) {
         super(left, right);
@@ -245,9 +245,9 @@ function newToken(type = "") {
         case "sub":
         case "-":
             return new Sub(...args);
-        case "mult":
+        case "mul":
         case "*":
-            return new Mult(...args);
+            return new Mul(...args);
         case "div":
         case "/":
             return new Div(...args);
