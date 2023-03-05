@@ -234,45 +234,40 @@ function newToken(type = "") {
 
     const args = Array.prototype.slice.call(arguments, 1);
 
-    switch (type) {
-        case "ID":
+    switch (type.toLowerCase()) {
+        case "id":
             return new ID(...args);
-        case "Int":
+        case "int":
             return new Int(...args);
-        case "Add":
+        case "add":
         case "+":
             return new Add(...args);
-        case "Sub":
+        case "sub":
         case "-":
             return new Sub(...args);
-        case "Mult":
+        case "mult":
         case "*":
             return new Mult(...args);
-        case "Div":
+        case "div":
         case "/":
             return new Div(...args);
-        case "Mod":
+        case "mod":
         case "%":
             return new Mod(...args);
-        case "Negate":
-        case "Neg":
+        case "negate":
+        case "neg":
             return new Negate(...args);
-        case "Inverse":
-        case "Inv":
+        case "inverse":
+        case "inv":
             return new Inverse(...args);
-        case "LParen":
-        case "LP":
         case "lparen":
         case "lp":
         case "(":
             return new LParen(...args);
-        case "RParen":
-        case "RP":
         case "rparen":
         case "rp":
         case ")":
             return new RParen(...args);
-        case "EOF":
         case "eof":
             return new EOF();
 

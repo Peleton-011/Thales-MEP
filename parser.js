@@ -30,46 +30,69 @@ class Parser {
         ["mul", "div"],
     ]
 
-    #depth = this.#operations.length - 1;
+    #depth = this.#operations.length;
 
-    parse (currDepth = 0, carry = this.#parse(1)) {
+    parse (currDepth = 0, carry) {
+        console.log("parse", currDepth, JSON.stringify(carry, null, 4), this.#operations[currDepth]);
 
-        if (currDepth === this.#depth) {
+        if (currDepth >= this.#depth) {
             return this.#parseFactor();
         }
 
+        carry = carry || this.parse(currDepth + 1);
+
+        console.log("carry", currDepth, JSON.stringify(carry, null, 4));
         const operation = this.#currentToken().type;
+        const opInCurrDepth = this.#operations[currDepth].includes(operation) || false;
+
+        console.log(operation, this.#operations[currDepth], opInCurrDepth);
         
-        if (!(operation in this.#operations[currDepth])) {
+        if (!opInCurrDepth) {
             return carry;
         }
+
         this.#consume(operation);
-        const newTerm = this.#parse(currDepth + 1, carry);
+        const newTerm = this.parse(currDepth + 1);
+        console.log("nTerm", currDepth, JSON.stringify(newTerm, null, 4));
+        console.log("carry", currDepth, JSON.stringify(carry, null, 4));
+        console.log(operation)
         carry = newToken(operation, carry, newTerm);
-        this.#parse(carry);
+        console.log("nCarry", currDepth, JSON.stringify(carry, null, 4));
+        this.parse(currDepth, carry);
     }
 
     #parseFactor () {
-        switch (this.#currentToken().type) {
+        const currType = this.#currentToken().type;
+        const currToken = this.#currentToken();
+        console.log(currToken, currType);
+        switch (currType) {
             case "id":
             case "int":
-                return this.#currentToken;
+                const result = currToken;
+                this.#consume(currType);
+                return result;
             case "lparen":
-                this.#consume();
-                const innerExpr = this.#parseExpr();
+                this.#consume("lparen");
+                const innerExpr = this.parse();
                 //if innerExpr == null -> Error
-                if (this.#currentToken().type!== "rparen") {
+                if (currType!== "rparen") {
                     return new Error("Expected ')'");
                 } else {
-                    this.#consume();
+                    this.#consume("rparen");
                     return innerExpr;
                 }
+            case "rparen":
+                return currToken;
             case "negate":
-                this.#consume();
+                this.#consume("negate");
                 return new Negate(this.#parseFactor());
+            case "eof":
+                return currToken;
             default:
                 return new Error(`Expected token type: id, int, lparen, rparen, negate`);
 
         }
     }
 }
+
+module.exports = {Parser};

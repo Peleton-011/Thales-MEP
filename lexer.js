@@ -62,9 +62,11 @@ function isDigit (char) {
     return char >= "0" && char <= "9";
 }
 
+
+module.exports = {Lexer};
 //console.log(newToken("Add", newToken("Int", 2), newToken("Int", 2)).print());
-const lexer = new Lexer();
+//const lexer = new Lexer();
 
-const a = lexer.tokenize("2 + 3 / 4");
+//const a = lexer.tokenize("2 + 3 / 4");
 
-console.log(a);
+//console.log(a);
