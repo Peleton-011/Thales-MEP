@@ -31,19 +31,21 @@ class Parser {
 
     #parseExpr () {
         const left = this.#parseTerm();
-        // To-Do: Turn the infinite loop into a recursive function
-        while (true) {
+
+        //To-Do: improve the name of this function
+        const continueParsing = (carry) => {
             const tokenType = this.#currentToken().type;
-            if (tokenType === "add" || tokenType === "sub") {
-                this.#consume(tokenType);
-                const right = this.#parseTerm();
-                left = newToken(tokenType, left, right);
-            } else {
-                return left;
+            
+            if (tokenType !== "add" && tokenType !== "sub") {
+                return carry;
             }
-
+            this.#consume(tokenType);
+            const right = this.#parseTerm();
+            carry = newToken(tokenType, carry, right);
+            continueParsing(carry);
         }
-
+        
+        return continueParsing(left);
     }
 
     #parseTerm () {
