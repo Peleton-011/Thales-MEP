@@ -202,6 +202,24 @@ class Int extends TreeNode {
 
 }
 
+class LParen extends TreeNode {
+
+    type = "lparen";
+    
+    constructor () {
+        super();
+    }
+}
+
+class RParen extends TreeNode {
+
+    type = "rparen";
+    
+    constructor () {
+        super();
+    }
+}
+
 class EOF extends TreeNode {
 
     type = "eof";
@@ -242,6 +260,18 @@ function newToken(type = "") {
         case "Inverse":
         case "Inv":
             return new Inverse(...args);
+        case "LParen":
+        case "LP":
+        case "lparen":
+        case "lp":
+        case "(":
+            return new LParen(...args);
+        case "RParen":
+        case "RP":
+        case "rparen":
+        case "rp":
+        case ")":
+            return new RParen(...args);
         case "EOF":
         case "eof":
             return new EOF();
