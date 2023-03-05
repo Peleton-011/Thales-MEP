@@ -25,31 +25,28 @@ class Parser {
         this.#tokenStream = input;
     }
 
-    parse (tokenStream) {
-        return this.#parseExpr();
-    }
+    #operations = [
+        ["add", "sub"],
+        ["mul", "div"],
+    ]
 
-    #parseExpr () {
-        const left = this.#parseTerm();
+    #depth = this.#operations.length - 1;
 
-        //To-Do: improve the name of this function
-        const continueParsing = (carry) => {
-            const tokenType = this.#currentToken().type;
-            
-            if (tokenType !== "add" && tokenType !== "sub") {
-                return carry;
-            }
-            this.#consume(tokenType);
-            const right = this.#parseTerm();
-            carry = newToken(tokenType, carry, right);
-            continueParsing(carry);
+    parse (depth = 0, carry = this.#parse(1)) {
+
+        if (depth === this.#depth) {
+            return this.#parseFactor();
         }
+
+        const tokenType = this.#currentToken().type;
         
-        return continueParsing(left);
-    }
-
-    #parseTerm () {
-
+        if (!(tokenType in this.#operations[depth])) {
+            return carry;
+        }
+        this.#consume(tokenType);
+        const right = this.#parse(depth + 1, carry);
+        carry = newToken(tokenType, carry, right);
+        this.#parse(carry);
     }
 
     #parseFactor () {
