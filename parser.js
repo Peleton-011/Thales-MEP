@@ -28,53 +28,41 @@ class Parser {
     constructor (input) {
         this.#tokenStream = input;
     }
-
+    
+    //Ordered by precedence
     #operations = [
         ["add", "sub"],
         ["mul", "div"],
     ]
 
-    #depth = this.#operations.length;
+    #opDepth = this.#operations.length;
 
-    parse (currDepth = 0, carry) {
-        console.log("parse", currDepth, JSON.stringify(carry, null, 4), this.#operations[currDepth]);
+    parse (currDepth = 0, carryResult) {
 
-        if (currDepth >= this.#depth) {
+        if (currDepth >= this.#opDepth) {
             return this.#parseFactor();
         }
 
-        carry = carry || this.parse(currDepth + 1);
+        carryResult = carryResult || this.parse(currDepth + 1);
 
         const operation = () => this.#currentToken().type;
         const opInCurrDepth = () => this.#operations[currDepth].includes(operation()) || false;
         
-        console.log(operation(), this.#operations[currDepth], opInCurrDepth());
-        console.log("carry", currDepth, JSON.stringify(carry, null, 4));
-        
-        //if (!opInCurrDepth || operation === "eof") {
-        //    return carry;
-        //}
-
         while (opInCurrDepth()) {
             const currOp = operation();
+
             this.#consume(currOp);
             const newTerm = this.parse(currDepth + 1);
-            console.log("nTerm", currDepth, JSON.stringify(newTerm, null, 4));
-            console.log("carry", currDepth, JSON.stringify(carry, null, 4));
-            console.log(currOp)
-            carry = newToken(currOp, carry, newTerm);
-            console.log("nCarry", currDepth, JSON.stringify(carry, null, 4));
+            //This ensures its read left-to-right
+            carryResult = newToken(currOp, carryResult, newTerm);
         }
-        
-        return carry;
-
-        this.parse(currDepth, carry);
+        return carryResult;
     }
 
     #parseFactor () {
         const currType = this.#currentToken().type;
         const currToken = this.#currentToken();
-        console.log("parsing", currToken, "for", currType);
+
         switch (currType) {
             case "id":
             case "int":
