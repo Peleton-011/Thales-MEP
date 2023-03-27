@@ -33,6 +33,7 @@ class Parser {
     #operations = [
         ["add", "sub"],
         ["mul", "div"],
+        ["pow"]
     ]
 
     #opDepth = this.#operations.length;
