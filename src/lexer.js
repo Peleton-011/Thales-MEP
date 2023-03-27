@@ -26,6 +26,7 @@ class Lexer {
                 case "*":
                 case "/":
                 case "^":
+                case "%":
                     tokens.push(newToken(this.#currentChar()));
                     break;
                 

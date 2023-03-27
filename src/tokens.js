@@ -152,9 +152,9 @@ class Negate extends TreeNode {
     }
 }
 
-class Inverse extends TreeNode {
+class Inv extends TreeNode {
 
-    type = "inverse";
+    type = "inv";
     
     node;
 
@@ -277,7 +277,7 @@ function newToken(type = "") {
             return new Negate(...args);
         case "inverse":
         case "inv":
-            return new Inverse(...args);
+            return new Inv(...args);
         case "lparen":
         case "lp":
         case "(":

@@ -32,7 +32,7 @@ class Parser {
     //Ordered by precedence
     #operations = [
         ["add", "sub"],
-        ["mul", "div"],
+        ["mul", "div", "mod", "inv"],
         ["pow"]
     ]
 
