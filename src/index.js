@@ -7,7 +7,7 @@ outputDiv.style = "white-space: pre;";
 
 const lexer = new Lexer();
 
-const expression = "5%2";
+const expression = "";
 const tokens = lexer.tokenize(expression);
 
 const parser = new Parser(tokens);
