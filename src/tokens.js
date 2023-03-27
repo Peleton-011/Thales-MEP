@@ -85,6 +85,21 @@ class Mul extends BinaryTreeNode {
     }
 }
 
+class Pow extends BinaryTreeNode {
+
+    type = "pow";
+
+    constructor (left, right) {
+        super(left, right);
+    }
+
+    operator = "^";
+
+    eval() {
+        return this.left.eval() ** this.right.eval();
+    }
+}
+
 //To-Do: decide if Divide(a,b) should be replaced with Mult(a, new Inverse(b))
 
 class Div extends BinaryTreeNode {
@@ -248,6 +263,9 @@ function newToken(type = "") {
         case "mul":
         case "*":
             return new Mul(...args);
+        case "pow":
+        case "^":
+            return new Pow(...args);
         case "div":
         case "/":
             return new Div(...args);
