@@ -47,7 +47,7 @@ class Lexer {
                     this.#cursor++;
                 }
 
-                this.#cursor--;
+                // this.#cursor--;
                 tokens.push(newCmdToken(strCmd));
             }
 

@@ -255,16 +255,30 @@ class Return extends Command {
 }
 
 class Print extends Command {
+    type = "print";
+    #expr;
 
-    constructor(){
+    constructor(expr){
         super(...arguments)
+        this.#expr = expr;
+    }
+
+    eval () {
+        return this.#expr.print();
     }
 }
 
 class Eval extends Command {
+    type = "eval";
+    #expr;
 
-    constructor(){
+    constructor(expr){
         super(...arguments)
+        this.#expr = expr;
+    }
+
+    eval () {
+        return this.#expr.eval();
     }
 }
 
