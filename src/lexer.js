@@ -1,4 +1,4 @@
-const { newToken } = require("./tokens");
+const { newToken, newCmdToken } = require("./tokens");
 
 class Lexer {
     #stream = "";
@@ -48,7 +48,7 @@ class Lexer {
                 }
 
                 this.#cursor--;
-                tokens.push(newToken(strCmd));
+                tokens.push(newCmdToken(strCmd));
             }
 
             switch (this.#currentChar()) {

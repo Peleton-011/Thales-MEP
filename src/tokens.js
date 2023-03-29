@@ -1,8 +1,6 @@
-
 //For context, here Negate == Opposite and Inverse == Reciprocal
 
 class TreeNode {
-
     type = "node";
 
     eval() {
@@ -10,20 +8,18 @@ class TreeNode {
     }
 
     print() {
-        return ""
+        return "";
     }
-
 }
 
 class BinaryTreeNode extends TreeNode {
-
     left;
     right;
     operator;
 
     constructor(left, right) {
         super();
-        
+
         this.left = left;
         this.right = right;
     }
@@ -38,10 +34,9 @@ class BinaryTreeNode extends TreeNode {
 }
 
 class Add extends BinaryTreeNode {
-
     type = "add";
 
-    constructor (left, right) {
+    constructor(left, right) {
         super(left, right);
     }
 
@@ -50,31 +45,28 @@ class Add extends BinaryTreeNode {
     eval() {
         return this.left.eval() + this.right.eval();
     }
-
 }
 
 //To-Do: decide if Subtract(a,b) should be replaced with Add(a, new Negate(b))
 
 class Sub extends BinaryTreeNode {
-
     type = "sub";
 
-    constructor (left, right) {
+    constructor(left, right) {
         super(left, right);
     }
 
     operator = "-";
-    
+
     eval() {
         return this.left.eval() - this.right.eval();
     }
 }
 
 class Mul extends BinaryTreeNode {
-
     type = "mul";
 
-    constructor (left, right) {
+    constructor(left, right) {
         super(left, right);
     }
 
@@ -86,10 +78,9 @@ class Mul extends BinaryTreeNode {
 }
 
 class Pow extends BinaryTreeNode {
-
     type = "pow";
 
-    constructor (left, right) {
+    constructor(left, right) {
         super(left, right);
     }
 
@@ -103,10 +94,9 @@ class Pow extends BinaryTreeNode {
 //To-Do: decide if Divide(a,b) should be replaced with Mult(a, new Inverse(b))
 
 class Div extends BinaryTreeNode {
-
     type = "div";
-    
-    constructor (left, right) {
+
+    constructor(left, right) {
         super(left, right);
     }
 
@@ -118,10 +108,9 @@ class Div extends BinaryTreeNode {
 }
 
 class Mod extends BinaryTreeNode {
-
     type = "mod";
-    
-    constructor (left, right) {
+
+    constructor(left, right) {
         super(left, right);
     }
 
@@ -133,12 +122,11 @@ class Mod extends BinaryTreeNode {
 }
 
 class Negate extends TreeNode {
-
     type = "negate";
 
     node;
 
-    constructor (node) {
+    constructor(node) {
         super();
         this.node = node;
     }
@@ -153,18 +141,17 @@ class Negate extends TreeNode {
 }
 
 class Inv extends TreeNode {
-
     type = "inv";
-    
+
     node;
 
-    constructor (node) {
+    constructor(node) {
         super();
         this.node = node;
     }
 
     eval() {
-        return 1/(this.node.eval());
+        return 1 / this.node.eval();
     }
 
     print() {
@@ -176,14 +163,13 @@ class Inv extends TreeNode {
 // To-Do: Implement Power(a,b) and Root(a,b) etc...
 
 class ID extends TreeNode {
-
     type = "id";
 
     id;
 
-    constructor (id) {
-       super();
-       this.id = id; 
+    constructor(id) {
+        super();
+        this.id = id;
     }
 
     eval() {
@@ -196,7 +182,6 @@ class ID extends TreeNode {
 }
 
 class Int extends TreeNode {
-
     type = "int";
 
     value;
@@ -204,7 +189,7 @@ class Int extends TreeNode {
     constructor(value) {
         super();
 
-        this.value = value;    
+        this.value = value;
     }
 
     eval() {
@@ -214,39 +199,33 @@ class Int extends TreeNode {
     print() {
         return String(this.value);
     }
-
 }
 
 class LParen extends TreeNode {
-
     type = "lparen";
-    
-    constructor () {
-        super();
-    }
-}
 
-class RParen extends TreeNode {
-
-    type = "rparen";
-    
-    constructor () {
-        super();
-    }
-}
-
-class EOF extends TreeNode {
-
-    type = "eof";
-    
     constructor() {
         super();
     }
 }
 
+class RParen extends TreeNode {
+    type = "rparen";
+
+    constructor() {
+        super();
+    }
+}
+
+class EOF extends TreeNode {
+    type = "eof";
+
+    constructor() {
+        super();
+    }
+}
 
 function newToken(type = "") {
-
     const args = Array.prototype.slice.call(arguments, 1);
 
     switch (type.toLowerCase()) {
@@ -290,11 +269,25 @@ function newToken(type = "") {
             return new EOF();
 
         default:
-
+            throw new Error("Unknown type: " + type);
             break;
     }
-    
+}
 
+function newCmdToken(cmdStr) {
+    const args = Array.prototype.slice.call(arguments, 1);
+
+    switch (cmdStr) {
+        case "return":
+            return new Return(...args);
+        case "print":
+            return new Print(...args);
+        case "eval":
+            return new Eval(...args);
+        default:
+            throw new Error("Unknown command: " + cmdStr);
+            break;
+    }
 }
 
 //const a = new Sub(new Int(2), new Int(3));
@@ -303,5 +296,6 @@ function newToken(type = "") {
 //console.log(a.print());
 
 module.exports = {
-    newToken
-}
+    newToken,
+    newCmdToken
+};
