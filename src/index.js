@@ -7,7 +7,7 @@ outputDiv.style = "white-space: pre;";
 
 const lexer = new Lexer();
 
-const expression = "";
+const expression = "print 3 + 3";
 const tokens = lexer.tokenize(expression);
 
 const parser = new Parser(tokens);
@@ -21,10 +21,10 @@ function fullOutput(tree) {
     output(`Input: ${expression} \r\n`);
     //output the result
     output(`Evaluates to: ${tree.eval()} \r\n`);
-    //output the printed tree
-    output(`Prints as: \r\n ${tree.print()} \r\n`);
-    //output the object representation
-    output(`Parse tree: \r\n ${printParseTree(tree)}`);
+    // //output the printed tree
+    // output(`Prints as: \r\n ${tree.print()} \r\n`);
+    // //output the object representation
+    // output(`Parse tree: \r\n ${printParseTree(tree)}`);
 }
 
 function printParseTree (tree) {

@@ -225,6 +225,49 @@ class EOF extends TreeNode {
     }
 }
 
+//##############################################################################################################
+//
+//  Commands vv
+//
+//##############################################################################################################
+
+class Command extends TreeNode {
+    type = "cmd";
+
+    constructor() {
+        super();
+    }
+};
+
+class Return extends Command {
+
+    type = "return";
+    #expr;
+
+    constructor(expr){
+        super(...arguments)
+        this.#expr = expr;
+    }
+
+    eval () {
+        return this.#expr;
+    }
+}
+
+class Print extends Command {
+
+    constructor(){
+        super(...arguments)
+    }
+}
+
+class Eval extends Command {
+
+    constructor(){
+        super(...arguments)
+    }
+}
+
 function newToken(type = "") {
     const args = Array.prototype.slice.call(arguments, 1);
 
@@ -297,5 +340,5 @@ function newCmdToken(cmdStr) {
 
 module.exports = {
     newToken,
-    newCmdToken
+    newCmdToken,
 };

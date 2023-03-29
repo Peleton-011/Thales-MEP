@@ -86,7 +86,7 @@ class Parser {
                 this.#consume("negate");
                 return new Negate(this.#parseFactor());
             default:
-                throw new Error(`Expected token type: id, int, lparen, rparen, negate`);
+                throw new Error(`Expected token type: id, int, lparen, rparen, negate found ${currType}`);
 
         }
     }
