@@ -38,13 +38,23 @@ class Parser {
 
     #opDepth = this.#operations.length;
 
-    parse (currDepth = 0, carryResult) {
+    parse () {
+
+        //Parse commands
+        //Parse expressions
+
+        //How to make it all work well?????
+    }
+
+    #parseExpr (currDepth = 0, carryResult) {
+
+        
 
         if (currDepth >= this.#opDepth) {
             return this.#parseFactor();
         }
 
-        carryResult = carryResult || this.parse(currDepth + 1);
+        carryResult = carryResult || this.#parseExpr(currDepth + 1);
 
         const operation = () => this.#currentToken().type;
         const opInCurrDepth = () => this.#operations[currDepth].includes(operation()) || false;
@@ -53,7 +63,7 @@ class Parser {
             const currOp = operation();
 
             this.#consume(currOp);
-            const newTerm = this.parse(currDepth + 1);
+            const newTerm = this.#parseExpr(currDepth + 1);
             //This ensures its read left-to-right
             carryResult = newToken(currOp, carryResult, newTerm);
         }
@@ -72,7 +82,7 @@ class Parser {
                 return result;
             case "lparen":
                 this.#consume("lparen");
-                const innerExpr = this.parse();
+                const innerExpr = this.#parseExpr();
                 //if innerExpr == null -> Error
                 if (currType!== "rparen") {
                     return new Error("Expected ')'");
@@ -89,6 +99,10 @@ class Parser {
                 throw new Error(`Expected token type: id, int, lparen, rparen, negate found ${currType}`);
 
         }
+    }
+
+    #parseCommand () {
+
     }
 }
 
